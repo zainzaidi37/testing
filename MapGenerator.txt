@@ -1,0 +1,137 @@
+#include <iostream>
+using namespace std;
+
+void printMap (int mode, int map) {
+    switch (mode) {
+        case 0 :
+            switch (map) {
+                case 0 :
+                    cout << "Gem Grab - Hard Rock Mine ";
+                break;
+                case 1 :
+                    cout << "Gem Grab - Double Swoosh";
+                break;
+                case 2 :
+                    cout << "Gem Grab - Last Stop";
+                break;
+            }
+        break;
+        case 1 : 
+            switch (map) {
+                case 0 :
+                    cout << "Brawl Ball - Field Goal";
+                break;
+                case 1 :
+                    cout << "Brawl Ball - Pinhole Punt";
+                break;
+                case 2 :
+                    cout << "Brawl Ball - Super Beach";
+                break;
+            }
+        break;
+        case 2 : 
+            switch (map) {
+                case 0 :
+                    cout << "Bounty - Shooting Star";
+                break;
+                case 1 :
+                    cout << "Bounty - Canal Grande";
+                break;
+                case 2 :
+                    cout << "Bounty - Dry Season";
+                break;
+            }
+        break;
+        case 3 : 
+            switch (map) {
+                case 0 :
+                    cout << "Heist - Kaboom Canyon";
+                break;
+                case 1 :
+                    cout << "Heist - Safe Zone";
+                break;
+                case 2 :
+                    cout << "Heist - Hot Potato";
+                break;
+            }
+        break;
+        case 4 : 
+            switch (map) {
+                case 0 :
+                    cout << "Hot Zone - Ring of Fire";
+                break;
+                case 1 :
+                    cout << "Hot Zone - Dueling Beetles";
+                break;
+                case 2 :
+                    cout << "Hot Zone - Split";
+                break;
+            }
+        break;
+        case 5 : 
+            switch (map) {
+                case 0 :
+                    cout << "Knockout - Goldarm Gulch";
+                break;
+                case 1 :
+                    cout << "Knockout - Belle's Rock";
+                break;
+                case 2 :
+                    cout << "Knockout - Out in the Open";
+                break;
+            }
+        break;
+    }
+}
+void generate (int size) {
+    int modes[size];
+    int maps[size];
+    int current = (rand() % 5);
+    modes[1] = current;
+    bool flag;
+
+    for (int i = 0; i < size; i++) {        //roll for modes
+        do {                                //check and reroll if duplicate
+            flag = true;
+            for (int j = 0; j < i; j++) {
+                if ((modes[j]) == current)
+                    flag = false;
+            }
+            if (flag == false)
+                current = (rand() % 5);
+            else 
+                flag = true;
+        } while (flag == false);
+        modes[i] = current;
+    }
+       
+    for (int i = 0; i < size; i++) {        //roll for maps
+        maps[i] = (rand() % 2);
+    }
+    for (int i = 0; i < size; i++) {        //print all maps
+        printMap(modes[i], maps[i]);
+        cout << endl;
+    }
+}
+
+int main () {
+    int BestOf;
+    int SetAmount;
+    while (true) {
+        cout << "Best of 1, 3 or 5?" << endl;   //selections
+        cin >> BestOf;
+        cout << "How many sets?" << endl;
+        cin >> SetAmount;
+
+        if (SetAmount < 50 && ((BestOf == 1) || (BestOf == 3) || (BestOf == 5))) 
+            break;
+        else 
+            cout << "Insert valid values" << endl;
+    }
+    srand (time(NULL)); //initialise RNG
+    for (int i = 0; i < SetAmount; i++) {
+        cout << "##### MATCH " << i + 1 << " #####" << endl;
+        generate(BestOf);
+        cout << endl;
+    }
+}
